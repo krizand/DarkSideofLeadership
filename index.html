@@ -20,6 +20,13 @@
         h1, h2 {
             text-align: center;
         }
+        .instructions {
+            font-size: 16px;
+            color: #555;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
         .question {
             margin-bottom: 15px;
             padding: 10px;
@@ -58,6 +65,11 @@
 <body>
     <div class="container">
         <h1>Personality Test</h1>
+        <p class="instructions">
+            Please read each question carefully and select the number that best describes how much you agree with the statement. 
+            Use a scale of 1 to 5, where 1 means "Strongly Disagree" and 5 means "Strongly Agree." 
+            Be honest with your answers for the most accurate results.
+        </p>
         <div id="quiz"></div>
         <button class="button" id="submit-btn">Submit</button>
         <div class="results" id="results" style="display:none;"></div>
