@@ -65,7 +65,7 @@
 <body>
     <div class="container">
         <h1>Dark Side of Leadership Test</h1>
-        <p class="instructions">
+        <p id="instructions" class="instructions">
             Please read each question carefully and select the number that best describes how much you agree with the statement. 
             The test uses a scale of 1 to 5, where 1 means "Strongly Disagree" and 5 means "Strongly Agree." 
             Be honest with your answers for the most accurate results.
@@ -81,7 +81,7 @@
             { group: 1, text: "I find myself resisting standards and procedures for formal review of my performance." },
             { group: 2, text: "I often worry that my superiors do not approve of the quality of my work." },
             { group: 3, text: "When I see two key leaders of my organization discreetly talking, I worry that they may be talking about me." },
-            { group: 4, text: "Fellow leaders in my organization frequently question whether my proposed goals and projects are feasible and realistic." },
+            { group: 4, text: "Fellow leaders in my church or organization frequently question whether my proposed goals and projects are feasible and realistic." },
             { group: 5, text: "I grew up in a family with one or more substance dependent people (alcohol, drugs, food, etc.)." },
             { group: 1, text: "It is common for me to procrastinate on major projects that I must do." },
             { group: 2, text: "I am highly regimented in my daily personal routines such as exercise or other disciplines." },
@@ -91,8 +91,8 @@
             { group: 1, text: "I regularly resist others’ ideas that could translate into increased performance or responsibility for me." },
             { group: 2, text: "When circumstances dictate that I must interrupt my daily routines, I find myself feeling out of sorts and even guilty for having 'skipped' a day." },
             { group: 3, text: "When an associate receives rave reviews for a project or assignment, I experience jealousy rather than joy for the recognition they are receiving." },
-            { group: 4, text: "Fellow leaders in my organization frequently question whether my proposed goals and projects are feasible and realistic." },
-            { group: 5, text: "I grew up in a family with one or more substance abusers." },
+            { group: 4, text: "I find it difficult to receive criticism of any kind, reacting with anger, anxiety, or even depression when it does come." },
+            { group: 5, text: "I am usually willing to put up with or ignore bizarre, embarrassing, or inappropriate behavior in others." },
             { group: 1, text: "I find myself constantly performing beneath my capabilities." },
             { group: 2, text: "I frequently find myself conscious of my status in relationship to others." },
             { group: 3, text: "I require subordinates within my organization to provide me with detailed reports of their activities." },
@@ -209,36 +209,41 @@
         submitButton.addEventListener('click', () => {
             try {
                 saveResponses();
-
+        
+                // Hide instructions and quiz container
+                const instructions = document.getElementById('instructions');
+                instructions.style.display = 'none';
+                quizContainer.style.display = 'none';
+                submitButton.style.display = 'none';
+        
                 // Calculate results
                 let highestScore = 0;
                 let highestCategory = '';
-
+        
                 Object.keys(responses).forEach(group => {
                     if (responses[group] > highestScore) {
                         highestScore = responses[group];
                         highestCategory = decoderKey[group];
                     }
                 });
-
+        
                 // Display results
                 let resultText = '<h2>Your Results</h2>';
                 Object.keys(decoderKey).forEach(group => {
                     const score = responses[group] || 0;
                     resultText += `<p><strong>${decoderKey[group]}:</strong> ${score}</p>`;
                 });
-
+        
                 resultText += `<h3>Highest Category: ${highestCategory}</h3>`;
                 resultText += `<p>${definitions[highestCategory]}</p>`;
-
+        
                 resultsContainer.innerHTML = resultText;
                 resultsContainer.style.display = 'block';
-                quizContainer.style.display = 'none';
-                submitButton.style.display = 'none';
             } catch (error) {
                 console.error(error.message);
             }
         });
+
 
         // Initial load
         showAllQuestions();
